@@ -43,6 +43,7 @@ test/phpunit/imap_header.txt
 test/phpunit/Functions2LibTest.php
 test/phpunit/AssetModelTest.php
 test/phpunit/WorkstationTest.php
+test/phpunit/PhpSessionInDbTest.php
 test/phpunit/MemoTest.php
 test/phpunit/FunctionsNumToWordTest.php
 test/phpunit/SecurityTest.php
@@ -53,9 +54,11 @@ test/phpunit/test.php
 test/phpunit/file_import_company_1.csv
 test/phpunit/ScriptsTest.php
 test/phpunit/EmailCollectorTest.php
+test/phpunit/AssetDepreciationTest.php
 test/phpunit/PricesTest.php
 test/phpunit/TvaTest.php
 test/phpunit/FormTest.php
+test/phpunit/EmailSignatureLibTest.php
 test/phpunit/FunctionsLibTest.php
 test/phpunit/ProfidLibTest.php
 test/phpunit/SecurityLoginTest.php
@@ -73,6 +76,7 @@ test/phpunit/RepositoryTest.php
 test/phpunit/WebservicesOtherTest.php
 test/phpunit/CompanyLibTest.php
 test/phpunit/CommandeFournisseurTest.php
+test/phpunit/AiMcpWireTest.php
 test/phpunit/AdminLibTest.php
 test/phpunit/imgsvgwithjs.svg
 test/phpunit/SalaryTest.php
@@ -156,11 +160,13 @@ test/phpunit/functional/InstallTest.php
 test/phpunit/EntrepotTest.php
 test/phpunit/testvirus.txt
 test/phpunit/FunctionsLibDragDropTest.php
+test/phpunit/FormMailTest.php
 test/phpunit/FactureFournisseurTest.php
 test/phpunit/MoTest.php
 test/phpunit/BookKeepingTest.php
 test/phpunit/RestAPIMoTest.php
 test/phpunit/PaypalTest.php
+test/phpunit/VariantsTest.php
 test/phpunit/CommonObjectTest.php
 test/phpunit/phpunit.dtd
 test/phpunit/FactureTest.php
@@ -345,6 +351,7 @@ htdocs/resource/contact.php
 htdocs/resource/list.php
 htdocs/resource/agenda.php
 htdocs/resource/card.php
+htdocs/resource/class/api_dolresources.class.php
 htdocs/resource/class/html.formresource.class.php
 htdocs/resource/class/dolresource.class.php
 htdocs/resource/note.php
@@ -7187,6 +7194,7 @@ htdocs/install/mysql/tables/llx_deliverydet_extrafields.sql
 htdocs/install/mysql/tables/llx_usergroup.sql
 htdocs/install/mysql/tables/llx_bank_record-bank.sql
 htdocs/install/mysql/tables/llx_categorie_propal-propal.sql
+htdocs/install/mysql/tables/llx_deletion_log.key.sql
 htdocs/install/mysql/tables/llx_onlinesignature.sql
 htdocs/install/mysql/tables/llx_propal_extrafields.key.sql
 htdocs/install/mysql/tables/llx_tva.sql
@@ -7369,6 +7377,7 @@ htdocs/install/mysql/tables/llx_bookmark.key.sql
 htdocs/install/mysql/tables/llx_c_currencies.sql
 htdocs/install/mysql/tables/llx_mailing-mailing.sql
 htdocs/install/mysql/tables/llx_categorie_fournisseur.key.sql
+htdocs/install/mysql/tables/llx_deletion_log.sql
 htdocs/install/mysql/tables/llx_c_exp_tax_range-expensereport.sql
 htdocs/install/mysql/tables/llx_links.key.sql
 htdocs/install/mysql/tables/llx_c_subtotals_titles-subtotals.key.sql
@@ -7424,6 +7433,7 @@ htdocs/install/mysql/tables/llx_hrm_skill_extrafields-hrm.sql
 htdocs/install/mysql/tables/llx_expedition.sql
 htdocs/install/mysql/tables/llx_asset_extrafields-asset.key.sql
 htdocs/install/mysql/tables/llx_categorie_fichinter-fichinter.key.sql
+htdocs/install/mysql/tables/llx_onlinepayment_session.sql
 htdocs/install/mysql/tables/llx_product_lang.sql
 htdocs/install/mysql/tables/llx_product_lang_extrafields.key.sql
 htdocs/install/mysql/tables/llx_fichinterdet_extrafields.key.sql
@@ -7749,6 +7759,7 @@ htdocs/install/mysql/tables/llx_object_lang.key.sql
 htdocs/install/mysql/tables/llx_accounting_analytic_axis-accounting.sql
 htdocs/install/mysql/tables/llx_resource_extrafields.sql
 htdocs/install/mysql/tables/llx_asset_accountancy_codes_economic-asset.key.sql
+htdocs/install/mysql/tables/llx_onlinepayment_session.key.sql
 htdocs/install/mysql/tables/llx_c_stcommcontact.sql
 htdocs/install/mysql/tables/llx_product_lot_extrafields.sql
 htdocs/install/mysql/tables/llx_workstation_workstation-workstation.key.sql
@@ -8556,6 +8567,7 @@ htdocs/core/actions_dellink.inc.php
 htdocs/core/doxygen.php
 htdocs/core/actions_linkedfiles.inc.php
 htdocs/core/triggers/README
+htdocs/core/triggers/interface_50_modVariants_VariantsImport.class.php
 htdocs/core/triggers/interface_50_modMailmanspip_Mailmanspipsynchro.class.php
 htdocs/core/triggers/interface_95_modWebhook_WebhookTriggers.class.php
 htdocs/core/triggers/interface_99_modBlockedlog_ActionsBlockedLog.class.php
@@ -8907,6 +8919,7 @@ htdocs/core/lib/emailing.lib.php
 htdocs/core/lib/product.lib.php
 htdocs/core/lib/loan.lib.php
 htdocs/core/lib/xcal.lib.php
+htdocs/core/lib/emailsignature.lib.php
 htdocs/core/lib/categories.lib.php
 htdocs/core/lib/expedition.lib.php
 htdocs/core/lib/website2.lib.php
@@ -9092,6 +9105,7 @@ htdocs/admin/sms.php
 htdocs/admin/stock.php
 htdocs/admin/dav.php
 htdocs/admin/invoice_situation.php
+htdocs/user/ajax/users.php
 htdocs/user/vcard.php
 htdocs/user/home.php
 htdocs/user/credentials.php
@@ -12258,6 +12272,7 @@ htdocs/holiday/info.php
 htdocs/holiday/view_log.php
 htdocs/holiday/month_report.php
 htdocs/holiday/define_holiday.php
+htdocs/holiday/holiday_agenda.php
 htdocs/holiday/list.php
 htdocs/holiday/card_group.php
 htdocs/holiday/card.php
@@ -12326,6 +12341,7 @@ htdocs/ai/tools/reports.class.php
 htdocs/ai/tools/crud_objects.class.php
 htdocs/ai/tools/products.class.php
 htdocs/ai/tools/invoices.class.php
+htdocs/ai/tools/coffeemaker.class.php
 htdocs/ai/tools/api_bridge.class.php
 htdocs/ai/ajax/list_models.php
 htdocs/ai/ajax/generate_content.php
@@ -12344,6 +12360,7 @@ htdocs/ai/assistant/download_pdf.php
 htdocs/ai/assistant/parse_intent.php
 htdocs/ai/assistant/index.php
 htdocs/ai/assistant/popover.php
+htdocs/ai/class/actions_ai.class.php
 htdocs/ai/class/mcp_protocol.class.php
 htdocs/ai/class/airequestlog.class.php
 htdocs/ai/class/llmadapter.class.php
@@ -12642,6 +12659,7 @@ htdocs/website/websiteaccount_card.php
 htdocs/website/index.php
 htdocs/website/class/website.class.php
 htdocs/website/class/websitepage.class.php
+htdocs/website/class/api_websites.class.php
 htdocs/website/lib/websiteaccount.lib.php
 htdocs/website/lib/website.lib.php
 htdocs/waf.inc.php
@@ -13781,6 +13799,10 @@ dev/build/exe/doliwamp/ca_demo_dolibarr.key
 dev/build/exe/doliwamp/index.php.install
 dev/build/exe/doliwamp/dolibarr.conf.install
 dev/build/travis-ci/apache.conf
+dev/build/dockervibe/vibes.sh
+dev/build/dockervibe/Dockerfile
+dev/build/dockervibe/README.md
+dev/build/dockervibe/docker-entrypoint.sh
 dev/build/makepack-howto.md
 dev/build/composer/README
 dev/build/zip/README
